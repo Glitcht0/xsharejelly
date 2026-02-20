@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistindo: {{ nome }}</title>
+    
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <style>
+        body { background-color: #000; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+        .player-wrapper { width: 100%; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .voltar { position: absolute; top: 20px; left: 20px; color: #fff; text-decoration: none; font-family: sans-serif; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 5px; z-index: 10; }
+        .voltar:hover { background: rgba(255,255,255,0.4); }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="voltar">← Voltar</a>
+
+    <div class="player-wrapper">
+        <video id="player" playsinline controls autoplay></video>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    
+    <script>
+        const video = document.getElementById('player');
+        const source = '{{ hls_url|safe }}'; // O Python vai nos dar essa URL
+        
+        const defaultOptions = {
+            title: '{{ nome }}',
+            i18n: { speed: 'Velocidade', normal: 'Normal' }
+        };
+
+        // Verifica se o navegador precisa do HLS.js (Chrome, Firefox, Edge, etc)
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(source);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                const player = new Plyr(video, defaultOptions);
+            });
+        } 
+        // Para Safari (Mac/iOS) que suporta HLS nativamente
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = source;
+            const player = new Plyr(video, defaultOptions);
+        }
+    </script>
+</body>
+</html>

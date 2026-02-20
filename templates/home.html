@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { margin-top: 0; color: #00a8ff; text-align: center; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2b2b2b;
+            color: #fff;
+            box-sizing: border-box; /* Garante que o padding não quebre a largura */
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00a8ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #008ecc; }
+        .mensagem { text-align: center; margin-bottom: 15px; color: #4caf50; font-weight: bold; }
+        .erro { color: #f44336; }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="container">
+        <h2>Bem-vindo ao XShareJelly</h2>
+        <p>Use o menu para adicionar vídeos ou assistir aos já cadastrados.</p>
+        <!-- "Servidor de Vídeos Funcionando! Acesse /play/MinePonte Ou /admin/add para adicionar vídeos. preciso botão pros links-->
+        
+        {% if mensagem %}
+            <div class="mensagem {% if erro %}erro{% endif %}">{{ mensagem }}</div>
+        {% endif %}
+
+        <button onclick="window.location.href='/admin/add'">Adicionar Vídeo</button>
+        <br><br>
+
+        <form method="GET" action="/play">
+            <label for="nome_video">Nome do vídeo:</label>
+            <input type="text" id="nome_video" name="nome_video" required>
+            
+            
+            <button type="submit">Assistir</button>
+        </form>
+
+    </div>
+</body>
+</html>

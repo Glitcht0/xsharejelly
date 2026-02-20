@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Vídeo</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { margin-top: 0; color: #00a8ff; text-align: center; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2b2b2b;
+            color: #fff;
+            box-sizing: border-box; /* Garante que o padding não quebre a largura */
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00a8ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #008ecc; }
+        .mensagem { text-align: center; margin-bottom: 15px; color: #4caf50; font-weight: bold; }
+        .erro { color: #f44336; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Novo Vídeo</h2>
+        
+        {% if mensagem %}
+            <div class="mensagem {% if erro %}erro{% endif %}">{{ mensagem }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label for="nome">Nome do Vídeo (Url curta):</label>
+            <input type="text" id="nome" name="nome" placeholder="ex: O_Auto_da_Compadecida" required>
+
+            <label for="link_ou_id">ID ou Link do Jellyfin:</label>
+            <input type="text" id="link_ou_id" name="link_ou_id" placeholder="Cole o link ou o ID puro aqui..." required>
+
+            <label for="senha">Senha:</label>
+            <input type="text" id="senha" name="senha" placeholder="Digite a senha de acesso..." required>
+
+            <button type="submit">Salvar no Banco</button>
+            <br><br>
+            <button type="button" onclick="window.location.href='/'">Voltar para Home</button>
+        </form>
+    </div>
+</body>
+</html>
